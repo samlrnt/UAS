@@ -25,7 +25,7 @@
          
         </activity>
         <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".IntroActivity" />
+        <activity android:name=".IntroActivity"></activity>
     </application>
 
 </manifest>
