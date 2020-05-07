@@ -8,45 +8,39 @@
     android:background="#9fcfb4"
     tools:context=".Awal">
 
-    <LinearLayout
-        android:layout_width="408dp"
-        android:layout_height="732dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="-2dp"
-        tools:ignore="MissingConstraints">
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Your Savings"
+        android:textColor="#fff"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/button1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.671"
+        tools:layout_editor_absoluteX="0dp" />
 
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="450dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:text="Start Your Savings"
-            android:textColor="#fff"
-            android:textSize="60sp"
-            android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kamu bisa mulai menabung dengan beberapa langkah mudah."
+        android:textColor="#fff"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/button1"
+        app:layout_constraintTop_toBottomOf="@+id/tv1"
+        app:layout_constraintVertical_bias="0.153"
+        tools:layout_editor_absoluteX="0dp" />
 
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="40dp"
-            android:text="Kamu bisa mulai menabung dengan beberapa langkah mudah."
-            android:textColor="#fff"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="START"
-            android:layout_marginLeft="130dp"/>
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:text="START"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
