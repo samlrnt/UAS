@@ -9,17 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Awal" />
-        <activity
-            android:name=".FormAddWallet"
-            android:label="test"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
+        <activity android:name=".Awal">
+               <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".FormAddWallet"
+            android:label="test"
+            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity android:name=".MainActivity">
+         
         </activity>
         <activity android:name=".HomeActivity"></activity>
         <activity android:name=".IntroActivity" />
