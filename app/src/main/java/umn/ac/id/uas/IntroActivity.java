@@ -139,7 +139,7 @@ public class IntroActivity extends AppCompatActivity {
                 //open main activity
 
                 Intent mainActivity = new Intent(getApplicationContext(),HomeActivity.class);
-                startActivity(HomeActivity);
+                startActivity(mainActivity);
                 // also we need to save a boolean value to storage so next time when the user run the app
                 // we could know that he is already checked the intro screen activity
                 // i'm going to use shared preferences to that process
