@@ -23,7 +23,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="75dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text="TextsView"
             android:textColor="@color/colorAccent"
             android:textSize="32sp"
             android:textStyle="bold" />
