@@ -21,9 +21,7 @@
             android:label="test"
             android:parentActivityName=".MainActivity">
         </activity>
-        <activity android:name=".MainActivity">
-         
-        </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".HomeActivity"></activity>
         <activity android:name=".IntroActivity"></activity>
     </application>

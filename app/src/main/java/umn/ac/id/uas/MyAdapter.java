@@ -26,6 +26,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     public MyAdapter(Context context) {
         this.context = context;
+        wallets = new ArrayList<>();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
