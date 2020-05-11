@@ -21,16 +21,16 @@
 
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@+id/buttonSetting"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/setting"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.060000002" />
 
     <TextView
         android:id="@+id/textView3"
@@ -131,6 +131,21 @@
                 app:layout_constraintVertical_bias="0.38" />
 
             <Button
+                android:id="@+id/btnExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expense"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:background="@drawable/roundedbutton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.78"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2"
+                app:layout_constraintVertical_bias="0.51" />
+
+            <Button
                 android:id="@+id/button"
                 android:layout_width="130dp"
                 android:layout_height="50dp"
@@ -139,10 +154,10 @@
                 android:textColor="#ffffff"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnExpense"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2"
-                app:layout_constraintVertical_bias="0.7" />
+                app:layout_constraintVertical_bias="0.51" />
 
             <TextView
                 android:id="@+id/textView2"
