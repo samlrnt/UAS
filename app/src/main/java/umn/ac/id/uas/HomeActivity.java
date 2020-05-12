@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button btn;
+    Button btn, btnex;
     int progressValue, currentPosition, saldowal, saldoexpense;
 
 
@@ -21,6 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
         ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar);
         btn = findViewById(R.id.button);
+        btnex = findViewById(R.id.btnExpense);
         //saldowal = findViewById(R.id.saldoWallet);
         //saldowal = saldowallet+saldowallet
         //saldoexpense = expense1+expense1;
@@ -49,6 +50,14 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentKeAddWallet = new Intent(HomeActivity.this, MainActivity.class);
                 startActivity(intentKeAddWallet);
+            }
+        });
+
+        btnex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentKeAddExpense = new Intent(HomeActivity.this, HalExpense.class);
+                startActivity(intentKeAddExpense);
             }
         });
 
