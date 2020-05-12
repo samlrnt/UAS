@@ -19,9 +19,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar)
+        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar);
         btn = findViewById(R.id.button);
-        saldowal = findViewById(R.id.saldoWallet);
+        //saldowal = findViewById(R.id.saldoWallet);
         //saldowal = saldowallet+saldowallet
         //saldoexpense = expense1+expense1;
         //progessbar = saldowal - saldoexpense;
