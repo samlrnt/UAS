@@ -74,33 +74,39 @@
         android:layout_width="409dp"
         android:layout_height="190dp"
         android:layout_marginTop="80dp"
+        android:textColor="#FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="#FFFF"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox"
+        app:layout_constraintVertical_bias="0.692" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/Goals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Goals = jumlah_uang"
         android:textColor="#FFFF"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/history"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox"
-        app:layout_constraintVertical_bias="0.287" />
+        app:layout_constraintVertical_bias="0.061" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/Reward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
         android:text="Reward : ---"
         android:textColor="#FFFF"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/history"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/Goals"
+        app:layout_constraintVertical_bias="0.482" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
