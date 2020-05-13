@@ -1,27 +1,38 @@
 package umn.ac.id.uas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button btn, btnex;
-    int progressValue, currentPosition, saldowal, saldoexpense;
-
-
+    Button btnex;
+    ImageView btn;
+    int progressMax=0, currentPosition, saldowal, saldoexpense;
+    ProgressBar progressBar;
+    WalletViewModel walletViewModel;
+    TextView etSaldoSum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar);
+        progressBar =(ProgressBar) findViewById(R.id.progressBar);
         btn = findViewById(R.id.button);
         btnex = findViewById(R.id.btnExpense);
+        walletViewModel = new ViewModelProvider(this).get(WalletViewModel.class);
+        etSaldoSum = findViewById(R.id.textView3);
         //saldowal = findViewById(R.id.saldoWallet);
         //saldowal = saldowallet+saldowallet
         //saldoexpense = expense1+expense1;
@@ -45,6 +56,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         }*/
 
+//        for(Wallet wallet:allWallets){
+//            progressMax += wallet.getBalance();
+//        }
+//        Log.d("test", String.valueOf(allWallets));
+//        progressBar.setMax(progressMax);
+//        etSaldoSum.setText(String.valueOf(progressMax));
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +78,17 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intentKeAddExpense);
             }
         });
-
+        walletViewModel.getAllWallet().observe(this, new Observer<List<Wallet>>() {
+            @Override
+            public void onChanged(List<Wallet> wallets) {
+                progressMax = 0;
+                for(Wallet wallet : wallets){
+                    progressMax += wallet.getBalance();
+                }
+                progressBar.setMax(progressMax);
+                etSaldoSum.setText(String.valueOf(progressMax));
+            }
+        });
     }
 
 

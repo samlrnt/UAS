@@ -141,6 +141,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         helper.attachToRecyclerView(recyclerView);
+        adapter.SetOnItemClick(new MyAdapter.OnItemClick() {
+            @Override
+            public void OnItemClickListener(Wallet wallet) {
+                Intent intent = new Intent(MainActivity.this, HalamanWallet.class);
+                intent.putExtra("nama",wallet.getName());
+                intent.putExtra("tabungan",wallet.getBalance());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -148,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == REQ_ADD){
-            Toast.makeText(this, "Wallet successfully created", Toast.LENGTH_LONG).show();
+
         }
     }
 }

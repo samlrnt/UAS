@@ -8,53 +8,67 @@
     tools:context=".HalamanWallet">
 
     <TextView
-        android:id="@+id/NamaWallet"
+        android:id="@+id/namaWallet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nama_Wallet"
-        android:textStyle="bold"
         android:textColor="#FFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.174" />
+        app:layout_constraintVertical_bias="0.123"
+        android:textSize="40dp"/>
 
-    <ImageView
+    <androidx.cardview.widget.CardView
         android:id="@+id/imageView5"
         android:layout_width="128dp"
-        android:layout_height="157dp"
+        android:layout_height="128dp"
+        app:cardBackgroundColor="#ffc933"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.278"
-        app:srcCompat="@drawable/yellowcircle" />
+        app:layout_constraintTop_toTopOf="@id/namaWallet"
+        app:layout_constraintVertical_bias="0.122"
+        app:cardCornerRadius="65dp">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="107dp"
-        android:layout_height="84dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NamaWallet"
-        app:layout_constraintVertical_bias="0.099"
-        app:srcCompat="@drawable/wallet_money_png_icon_7" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="95dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/wallet_money_png_icon_7" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tabungan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="jumlah_Tabungan"
-        android:textStyle="bold"
         android:textColor="#FFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.112" />
+        app:layout_constraintTop_toBottomOf="@id/imageView5"
+        app:layout_constraintVertical_bias="0.042"
+        android:textSize="20dp"/>
+
+    <ProgressBar
+        android:id="@+id/probar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginRight="20dp"
+        android:background="#FFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabungan" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -64,15 +78,14 @@
         android:textColor="#FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabungan"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="0.167" />
 
     <ListView
         android:id="@+id/history"
-        android:layout_width="409dp"
-        android:layout_height="190dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:textColor="#FFFF"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -28,11 +28,15 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backgroundForm">
+        app:layout_constraintTop_toBottomOf="@id/backgroundForm"
+        android:layout_marginTop="40dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <LinearLayout
             android:id="@+id/form"
@@ -46,41 +50,79 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
 
                 <ImageView
                     android:id="@+id/expenseImg"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_add_circle" />
+                    android:src="@drawable/walletvector"
+                    android:layout_marginRight="10dp"/>
 
-                <EditText
-                    android:id="@+id/namaExpense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Wallet Name"
-                    android:inputType="textPersonName" />
                 <Spinner
                     android:id="@+id/spinnerAddEx"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
+                    android:layout_height="30dp" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
 
                 <ImageView
-                    android:id="@+id/nominalImg"
+                    android:id="@+id/catImg"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_add_circle" />
+                    android:src="@drawable/ic_add_circle"
+                    android:layout_marginRight="10dp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerCat"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+
+                <ImageView
+                    android:id="@+id/descImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_add_circle"
+                    android:layout_marginRight="10dp"/>
 
                 <EditText
-                    android:id="@+id/saldoWallet"
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ex. Shopping"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="28dp"
+                    android:text="Rp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#000"/>
+
+                <EditText
+                    android:id="@+id/nominal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nominal"
@@ -88,17 +130,20 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/submitEx"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/form"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="#2bde0b"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:text="Submit"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/submitEx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="50dp"
+        android:background="#2bde0b"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:text="Save"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

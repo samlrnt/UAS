@@ -99,4 +99,10 @@ public class Wallet {
     public void setColor(int color) {
         this.color = color;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
+    }
 }

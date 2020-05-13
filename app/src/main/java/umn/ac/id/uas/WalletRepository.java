@@ -35,6 +35,10 @@ public class WalletRepository {
         new DeleteAsyncTask(walletDao).execute(wallet);
     }
 
+    public void updateWallet(Wallet wallet){
+        new UpdateAsyncTask(walletDao).execute(wallet);
+    }
+
     private static class InsertAsyncTask extends AsyncTask<Wallet, Void, Void>{
         private WalletDao walletDao;
 
@@ -70,6 +74,20 @@ public class WalletRepository {
         @Override
         protected Void doInBackground(Wallet... wallets) {
             walletDao.deleteWallet(wallets[0]);
+            return null;
+        }
+    }
+
+    private static class UpdateAsyncTask extends AsyncTask<Wallet, Void, Void>{
+
+        private WalletDao walletDao;
+
+        private UpdateAsyncTask(WalletDao walletDao){
+            this.walletDao = walletDao;
+        }
+        @Override
+        protected Void doInBackground(Wallet... wallets) {
+            walletDao.updateWallet(wallets[0]);
             return null;
         }
     }

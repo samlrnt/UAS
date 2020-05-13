@@ -23,6 +23,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     private List<Wallet> walletsCopy;
     private Context context;
     private int img = R.drawable.wallet_money_png_icon_7;
+    private OnItemClick listener;
 
     public MyAdapter(Context context) {
         this.context = context;
@@ -44,19 +45,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             cardViewEdit = itemView.findViewById(R.id.cardViewEdit);
             cardViewDelete = itemView.findViewById(R.id.cardViewDelete);
 
-            cardViewDelete.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
+                    int position = getAdapterPosition();
+                    if(listener != null && position != RecyclerView.NO_POSITION){
+                        listener.OnItemClickListener(wallets.get(position));
+                    }
                 }
             });
-
-           background.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   Toast.makeText(context, "click", Toast.LENGTH_SHORT).show();
-               }
-           });
         }
     }
 
@@ -127,5 +124,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             notifyDataSetChanged();
         }
     };
+    public interface OnItemClick{
+        void OnItemClickListener(Wallet wallet);
+    }
 
+    public void SetOnItemClick(OnItemClick listener){
+        this.listener = listener;
+    }
 }
