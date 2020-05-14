@@ -108,6 +108,7 @@ public class HalExpense extends AppCompatActivity {
                         }
                         transaksiViewModel.addTransaksi(transaksi);
                         walletViewModel.updateWallet(chsWalet);
+                        finish();
                     }
                 }
             }

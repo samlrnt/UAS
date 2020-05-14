@@ -340,7 +340,7 @@
         app:layout_constraintTop_toBottomOf="@id/cons"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="1in"
+        android:layout_marginTop="0.5in"
         android:background="#2bde0b"
         android:textColor="#fff"
         android:textStyle="bold"
