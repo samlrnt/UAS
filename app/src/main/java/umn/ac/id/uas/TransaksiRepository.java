@@ -13,13 +13,17 @@ public class TransaksiRepository {
     private LiveData<List<Transaksi>> allTransaksi;
 
     public TransaksiRepository(Application application){
-        TransaksiDatabase db = TransaksiDatabase.getInstance(application);
+        WalletDatabase db = WalletDatabase.getInstance(application);
         transaksiDao = db.transaksiDao();
         allTransaksi = transaksiDao.getAllTransaksi();
     }
 
     public void addTransaksi(Transaksi transaksi){
         new AddTransaksiAsyncTask(transaksiDao).execute(transaksi);
+    }
+
+    public void deleteAllTransaksi(){
+        new DeleteAllTransaksiAsyncTask(transaksiDao).execute();
     }
 
     public LiveData<List<Transaksi>> getAllTransaksi() {
@@ -38,4 +42,20 @@ public class TransaksiRepository {
             return null;
         }
     }
+
+    private class DeleteAllTransaksiAsyncTask extends AsyncTask<Void, Void, Void>{
+
+        private TransaksiDao transaksiDao;
+
+        private DeleteAllTransaksiAsyncTask(TransaksiDao transaksiDao){
+            this.transaksiDao = transaksiDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            transaksiDao.deleteAllTransaksi();
+            return null;
+        }
+    }
+
 }

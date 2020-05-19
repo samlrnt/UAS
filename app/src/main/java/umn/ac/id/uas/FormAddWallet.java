@@ -2,8 +2,8 @@ package umn.ac.id.uas;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,14 +20,12 @@ public class FormAddWallet extends AppCompatActivity {
     EditText etNama, etSaldo, etNotes, etSaldoGoal;
     CheckBox cbGoal;
     int defColor;
-    WalletViewModel walletViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_add_wallet);
 
-        walletViewModel = new ViewModelProvider(this).get(WalletViewModel.class);
         etNama = findViewById(R.id.namaWallet);
         etSaldo = findViewById(R.id.saldoWallet);
         etNotes = findViewById(R.id.notesWallet);
@@ -37,7 +35,6 @@ public class FormAddWallet extends AppCompatActivity {
         btnClrPicker = findViewById(R.id.colorpicker);
         etSaldoGoal.setEnabled(false);
         defColor = ContextCompat.getColor(FormAddWallet.this, R.color.colorPrimary);
-
         btnClrPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,19 +72,25 @@ public class FormAddWallet extends AppCompatActivity {
                     if(etNotes.getText().toString().trim().length() <= 0){
                         etNotes.setText(null);
                     }
-                    if(etSaldoGoal.getText().toString().length() <= 0){
-                        etSaldoGoal.setText("0");
+                    if(etSaldoGoal.getText().toString().trim().length() <= 0){
+                        etSaldoGoal.setText(null);
                     }
                     String notesWallet = etNotes.getText().toString().trim();
-                    int saldoTarget = Integer.parseInt(etSaldoGoal.getText().toString());
+                    int saldoTarget;
+                    if(etSaldoGoal.getText().toString().trim().isEmpty())
+                        saldoTarget = -1;
+                    else
+                        saldoTarget = Integer.parseInt(etSaldoGoal.getText().toString().trim());
 
-                    Wallet wallet = new Wallet(namaWallet, saldoWallet, notesWallet, isgoal, saldoTarget, defColor);
-
-                    walletViewModel.addWallet(wallet);
-
-                    setResult(MainActivity.REQ_ADD);
+                    Intent sendIntent = new Intent();
+                    sendIntent.putExtra("nama",namaWallet);
+                    sendIntent.putExtra("saldo",saldoWallet);
+                    sendIntent.putExtra("notes", notesWallet);
+                    sendIntent.putExtra("isgoal", isgoal);
+                    sendIntent.putExtra("saldoTarget", saldoTarget);
+                    sendIntent.putExtra("warna", defColor);
+                    setResult(RESULT_OK, sendIntent);
                     finish();
-
                 }
             }
         });

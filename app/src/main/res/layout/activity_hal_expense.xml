@@ -19,7 +19,7 @@
         android:id="@+id/titleHalEx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Expense"
+        android:text="Add Transaction"
         android:textColor="#fff"
         android:textSize="30sp"
         android:textStyle="bold"

@@ -12,14 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout btnAddWallet;
     private ConstraintLayout mainLayout;
     private WalletViewModel walletViewModel;
+    private TransaksiViewModel transaksiViewModel;
     private TextView whatWallet;
     private SearchView etSearch;
-    public static int REQ_ADD = 1;
+    public static int REQ_ADD = 1, REQ_EDIT = 2;
+    private Wallet walletinit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         fragmentManager = getSupportFragmentManager();
         walletViewModel = new ViewModelProvider(this).get(WalletViewModel.class);
+        transaksiViewModel = new ViewModelProvider(this).get(TransaksiViewModel.class);
 
         adapter = new MyAdapter(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -76,10 +72,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        transaksiViewModel.getAllTransaksi().observe(this, new Observer<List<Transaksi>>() {
+            @Override
+            public void onChanged(List<Transaksi> transaksis) {
+                adapter.setTransaksi(transaksis);
+            }
+        });
+
         whatWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 walletViewModel.deleteAll();
+                transaksiViewModel.deleteAllTransaksi();
             }
         });
 
@@ -96,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT
-        | ItemTouchHelper.RIGHT) {
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -108,9 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 if(direction == ItemTouchHelper.LEFT){
                     walletViewModel.deleteWallet(adapter.getWallet(viewHolder.getAdapterPosition()));
                     Toast.makeText(MainActivity.this, "Delete "+adapter.getWallet(viewHolder.getAdapterPosition()).getName()+" successfully", Toast.LENGTH_SHORT).show();
-                }
-                else if(direction == ItemTouchHelper.RIGHT){
-                    Toast.makeText(MainActivity.this, "Edit "+adapter.getWallet(viewHolder.getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -136,8 +136,6 @@ public class MainActivity extends AppCompatActivity {
                                     boolean isCurrentlyActive) {
                 final View foregroundView = ((MyAdapter.MyViewHolder) viewHolder).background;
                 getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX/4, dY, actionState, isCurrentlyActive);
-
-
             }
         });
         helper.attachToRecyclerView(recyclerView);
@@ -145,9 +143,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void OnItemClickListener(Wallet wallet) {
                 Intent intent = new Intent(MainActivity.this, HalamanWallet.class);
-                intent.putExtra("nama",wallet.getName());
-                intent.putExtra("tabungan",wallet.getBalance());
-                startActivity(intent);
+                walletinit = wallet;
+                intent.putExtra("wallet", wallet);
+                startActivityForResult(intent, REQ_EDIT);
             }
         });
     }
@@ -156,8 +154,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQ_ADD){
-
+        if(requestCode == REQ_ADD && resultCode == RESULT_OK){
+            String nama = data.getStringExtra("nama");
+            int saldo = data.getIntExtra("saldo", 0);
+            String notes = data.getStringExtra("notes");
+            boolean isgoal = data.getBooleanExtra("isgoal", false);
+            int target = data.getIntExtra("saldoTarget", 0);
+            int warna = data.getIntExtra("warna", 0);
+            Wallet wallet = new Wallet(nama, saldo, notes, isgoal, target, warna);
+            walletViewModel.addWallet(wallet);
+            Toast.makeText(this, "Wallet successfully created", Toast.LENGTH_SHORT).show();
+        }
+        else if(requestCode == REQ_EDIT && resultCode == RESULT_OK){
+            Wallet walletedit = data.getParcelableExtra("databalik");
+            if(walletinit.isGoal() != walletedit.isGoal()){
+                walletViewModel.updateWallet(walletedit);
+                Toast.makeText(this, "wallet updated", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

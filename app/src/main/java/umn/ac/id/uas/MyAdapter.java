@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -21,6 +21,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     private List<Wallet> wallets;
     private List<Wallet> walletsCopy;
+    private List<Transaksi> transaksi;
     private Context context;
     private int img = R.drawable.wallet_money_png_icon_7;
     private OnItemClick listener;
@@ -28,12 +29,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public MyAdapter(Context context) {
         this.context = context;
         wallets = new ArrayList<>();
+        transaksi = new ArrayList<>();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         CardView background, cardViewImgWallet, cardViewEdit, cardViewDelete;
         ImageView imgWallet;
         TextView namaWallet, saldoWallet;
+        ProgressBar barWallet;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -44,6 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             cardViewImgWallet = itemView.findViewById(R.id.cardViewImgWallet);
             cardViewEdit = itemView.findViewById(R.id.cardViewEdit);
             cardViewDelete = itemView.findViewById(R.id.cardViewDelete);
+            barWallet = itemView.findViewById(R.id.barWallet);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,12 +71,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        int progress=0;
         Wallet wallet = wallets.get(position);
         holder.imgWallet.setBackgroundResource(img);
         holder.namaWallet.setText(wallet.getName());
-        holder.saldoWallet.setText(String.valueOf(wallet.getBalance()));
+        holder.saldoWallet.setText("Rp. "+wallet.getBalance());
         holder.background.setCardBackgroundColor(wallet.getColor());
         holder.cardViewImgWallet.setCardBackgroundColor(wallet.getColor() - 10101010);
+        holder.barWallet.setMax(wallet.getInitBalance());
+        holder.barWallet.setProgress(progress);
+
+        for(Transaksi ts: transaksi){
+            if(wallet.getIdWallet() == ts.getIdCreatorWallet()){
+                if(ts.getCategory().equals("Expense")) progress += ts.getNominal();
+                else if (ts.getCategory().equals("Income")) progress -= ts.getNominal();
+            }
+        }
+        holder.barWallet.setProgress(progress);
     }
 
     @Override
@@ -83,6 +98,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public void setWallets(List<Wallet> wallets) {
         this.wallets = wallets;
         walletsCopy = new ArrayList<>(wallets);
+        notifyDataSetChanged();
+    }
+
+    public void setTransaksi(List<Transaksi> transaksi) {
+        this.transaksi = transaksi;
         notifyDataSetChanged();
     }
 
@@ -124,6 +144,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             notifyDataSetChanged();
         }
     };
+
     public interface OnItemClick{
         void OnItemClickListener(Wallet wallet);
     }

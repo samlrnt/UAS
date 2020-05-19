@@ -1,5 +1,8 @@
 package umn.ac.id.uas;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
@@ -7,16 +10,20 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "wallet")
-public class Wallet {
+public class Wallet implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    @ColumnInfo(name = "id")
-    private int id;
+    @ColumnInfo(name = "id_wallet")
+    private int idWallet;
 
     @NonNull
     @ColumnInfo(name = "namaWallet")
     private String name;
+
+    @NonNull
+    @ColumnInfo(name = "saldoAwal")
+    private int initBalance;
 
     @NonNull
     @ColumnInfo(name = "saldo")
@@ -37,6 +44,7 @@ public class Wallet {
 
     public Wallet(String name, int balance, String notes, boolean isGoal, int saldoGoal, int color){
         this.name = name;
+        this.initBalance = balance;
         this.balance = balance;
         this.notes = notes;
         this.isGoal = isGoal;
@@ -44,12 +52,39 @@ public class Wallet {
         this.color = color;
     }
 
-    public int getId() {
-        return id;
+    protected Wallet(Parcel in) {
+        idWallet = in.readInt();
+        name = in.readString();
+        initBalance = in.readInt();
+        balance = in.readInt();
+        notes = in.readString();
+        isGoal = in.readByte() != 0;
+        saldoGoal = in.readInt();
+        color = in.readInt();
+    }
+
+    public static final Creator<Wallet> CREATOR = new Creator<Wallet>() {
+        @Override
+        public Wallet createFromParcel(Parcel in) {
+            return new Wallet(in);
+        }
+
+        @Override
+        public Wallet[] newArray(int size) {
+            return new Wallet[size];
+        }
+    };
+
+    public int getIdWallet() {
+        return idWallet;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getInitBalance() {
+        return initBalance;
     }
 
     public int getBalance() {
@@ -72,12 +107,16 @@ public class Wallet {
         return color;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdWallet(int idWallet) {
+        this.idWallet = idWallet;
     }
 
     public void setName(@NonNull String name) {
         this.name = name;
+    }
+
+    public void setInitBalance(int initBalance) {
+        this.initBalance = initBalance;
     }
 
     public void setBalance(int balance) {
@@ -104,5 +143,22 @@ public class Wallet {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idWallet);
+        dest.writeString(name);
+        dest.writeInt(initBalance);
+        dest.writeInt(balance);
+        dest.writeString(notes);
+        dest.writeByte((byte) (isGoal ? 1 : 0));
+        dest.writeInt(saldoGoal);
+        dest.writeInt(color);
     }
 }

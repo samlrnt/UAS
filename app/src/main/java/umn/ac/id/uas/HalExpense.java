@@ -59,7 +59,6 @@ public class HalExpense extends AppCompatActivity {
 
             }
         });
-
         sCat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -91,7 +90,9 @@ public class HalExpense extends AppCompatActivity {
         btnExSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etNominal.getText().toString().trim().length() <= 0 || etDesc.getText().toString().trim().length() <= 0)
+                if(allWallets.isEmpty())
+                    Toast.makeText(HalExpense.this, "you don't have a wallet", Toast.LENGTH_SHORT).show();
+                else if(etNominal.getText().toString().trim().length() <= 0 || etDesc.getText().toString().trim().length() <= 0)
                     Toast.makeText(HalExpense.this, "Nominal and Description cannot be empty", Toast.LENGTH_SHORT).show();
                 else{
                     int nominal = Integer.parseInt(etNominal.getText().toString().trim());
@@ -99,7 +100,7 @@ public class HalExpense extends AppCompatActivity {
                     if(nominal <= 0)
                         Toast.makeText(HalExpense.this, "nominal value must be greater than zero", Toast.LENGTH_SHORT).show();
                     else{
-                        Transaksi transaksi = new Transaksi(chsWalet.getId(), cat, description, nominal);
+                        Transaksi transaksi = new Transaksi(chsWalet.getIdWallet(), cat, description, nominal);
                         if(cat.equals(category[0])){
                             chsWalet.setBalance(chsWalet.getBalance() - nominal);
                         }

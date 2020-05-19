@@ -24,4 +24,8 @@ public class TransaksiViewModel extends AndroidViewModel {
     public LiveData<List<Transaksi>> getAllTransaksi(){
         return transaksiRepository.getAllTransaksi();
     }
+
+    public void deleteAllTransaksi(){
+        transaksiRepository.deleteAllTransaksi();
+    }
 }

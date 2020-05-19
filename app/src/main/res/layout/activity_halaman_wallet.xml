@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tabungan"
         app:layout_constraintVertical_bias="0.167" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,7 +99,6 @@
         android:layout_height="wrap_content"
         android:text="Goals = jumlah_uang"
         android:textColor="#FFFF"
-        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/history"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
@@ -114,7 +113,6 @@
         android:layout_marginBottom="31dp"
         android:text="Reward : ---"
         android:textColor="#FFFF"
-        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/history"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
