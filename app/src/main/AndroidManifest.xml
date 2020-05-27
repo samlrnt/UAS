@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HalamanWallet"></activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".HalamanWallet" />
         <activity android:name=".Awal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,11 +23,11 @@
         <activity
             android:name=".FormAddWallet"
             android:label="test"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".IntroActivity" />
-        <activity android:name=".HalExpense"/>
+        <activity android:name=".HalExpense" />
     </application>
 
 </manifest>

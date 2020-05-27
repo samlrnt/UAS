@@ -18,7 +18,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button btnex;
+    Button btnex, setting;
     ImageView btn;
     int currentPosition, saldowal, saldoexpense;
     ProgressBar progressBar;
@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         progressBar =(ProgressBar) findViewById(R.id.progressBar);
         btn = findViewById(R.id.button);
         btnex = findViewById(R.id.btnExpense);
+        setting = findViewById( R.id.buttonSetting );
         walletViewModel = new ViewModelProvider(this).get(WalletViewModel.class);
         transaksiViewModel = new ViewModelProvider(this).get(TransaksiViewModel.class);
         etSaldoSum = findViewById(R.id.textView3);
@@ -61,6 +62,14 @@ public class HomeActivity extends AppCompatActivity {
             catch (Exception e) {
             }
         }*/
+
+        setting.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSetting = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(  intentSetting);
+            }
+        } );
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
