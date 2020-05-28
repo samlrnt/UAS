@@ -11,11 +11,13 @@ public class TransaksiRepository {
 
     private TransaksiDao transaksiDao;
     private LiveData<List<Transaksi>> allTransaksi;
+    private List<Transaksi> allTransaksiList;
 
     public TransaksiRepository(Application application){
         WalletDatabase db = WalletDatabase.getInstance(application);
         transaksiDao = db.transaksiDao();
         allTransaksi = transaksiDao.getAllTransaksi();
+        allTransaksiList = transaksiDao.getAllTransaksiList();
     }
 
     public void addTransaksi(Transaksi transaksi){
@@ -28,6 +30,10 @@ public class TransaksiRepository {
 
     public LiveData<List<Transaksi>> getAllTransaksi() {
         return allTransaksi;
+    }
+
+    public List<Transaksi> getAllTransaksiList(){
+        return allTransaksiList;
     }
 
     private class AddTransaksiAsyncTask extends AsyncTask<Transaksi, Void, Void>{

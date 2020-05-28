@@ -23,4 +23,7 @@ public interface TransaksiDao {
     @Query("SELECT * FROM transaksi")
     LiveData<List<Transaksi>> getAllTransaksi();
 
+    @Query("SELECT * FROM transaksi")
+    List<Transaksi> getAllTransaksiList();
+
 }

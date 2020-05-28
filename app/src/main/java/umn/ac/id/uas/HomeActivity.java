@@ -20,12 +20,14 @@ public class HomeActivity extends AppCompatActivity {
 
     Button btnex, setting;
     ImageView btn;
-    int currentPosition, saldowal, saldoexpense;
+    int progressMax, progressBalance, progress, expense;
     ProgressBar progressBar;
     WalletViewModel walletViewModel;
     TransaksiViewModel transaksiViewModel;
     TextView etSaldoSum, etExpense;
     static String TAG = "test";
+    private List<Wallet> allWallet;
+    private List<Transaksi> allTransaksi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,8 @@ public class HomeActivity extends AppCompatActivity {
         transaksiViewModel = new ViewModelProvider(this).get(TransaksiViewModel.class);
         etSaldoSum = findViewById(R.id.textView3);
         etExpense = findViewById(R.id.textView2);
+        allWallet = walletViewModel.getAllWalletList();
+        allTransaksi = transaksiViewModel.getAllTransaksiList();
         //saldowal = findViewById(R.id.saldoWallet);
         //saldowal = saldowallet+saldowallet
         //saldoexpense = expense1+expense1;
@@ -66,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         setting.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentSetting = new Intent(HomeActivity.this, SettingsActivity.class);
+                Intent intentSetting = new Intent(HomeActivity.this, Setting.class);
                 startActivity(  intentSetting);
             }
         } );
@@ -86,6 +90,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intentKeAddExpense);
             }
         });
+
         walletViewModel.getAllWallet().observe(this, new Observer<List<Wallet>>() {
             @Override
             public void onChanged(List<Wallet> wallets) {
@@ -97,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 progressBar.setMax(progressMax);
                 etSaldoSum.setText(String.valueOf(progressBalance));
+                //updateProgress();
             }
         });
 
@@ -116,45 +122,36 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 progressBar.setProgress(progress);
                 etExpense.setText(String.valueOf(expense));
-                Log.d(TAG, String.valueOf(progressBar.getProgress()));
+                //updateProgress();
             }
         });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-    }
+    /*private void updateProgress(){
+        progressMax=0;
+        progressBalance=0;
+        progress=0;
+        expense=0;
+        allWallet = walletViewModel.getAllWalletList();
+        allTransaksi = transaksiViewModel.getAllTransaksiList();
+        for(Wallet wallet: allWallet){
+            progressMax += wallet.getInitBalance();
+            progressBalance += wallet.getBalance();
+        }
+        progressBar.setMax(progressMax);
+        etSaldoSum.setText(String.valueOf(progressBalance));
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
+        for(Transaksi transaksi:allTransaksi){
+            if(transaksi.getCategory().equals("Expense")){
+                progress += transaksi.getNominal();
+                expense += transaksi.getNominal();
+            }
+            else if(transaksi.getCategory().equals("Income")){
+                progress -= transaksi.getNominal();
+            }
+        }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ");
-
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "onRestart: ");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
+        progressBar.setProgress(progress);
+        etExpense.setText(String.valueOf(expense));
+    }*/
 }

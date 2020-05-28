@@ -19,9 +19,10 @@ public abstract class WalletDatabase extends RoomDatabase {
     public static synchronized WalletDatabase getInstance(Context context){
         if(INSTANCE == null){
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    WalletDatabase.class, "wallet_database").
-                    fallbackToDestructiveMigration().
-                    build();
+                    WalletDatabase.class, "wallet_database")
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    .build();
         }
         return INSTANCE;
     }

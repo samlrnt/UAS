@@ -7,16 +7,19 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class WalletRepository {
 
     private WalletDao walletDao;
     private LiveData<List<Wallet>> allWallet;
+    private List<Wallet> walletList;
 
     public WalletRepository(Application application){
        WalletDatabase db = WalletDatabase.getInstance(application);
        walletDao = db.walletDao();
        allWallet = walletDao.getAllWallet();
+       walletList = walletDao.getAllWalletList();
     }
 
     public void addWallet(Wallet wallet){
@@ -29,6 +32,10 @@ public class WalletRepository {
 
     public LiveData<List<Wallet>> getAllWallet(){
         return allWallet;
+    }
+
+    public List<Wallet> getWalletList(){
+        return walletList;
     }
 
     public void deleteWallet(Wallet wallet){
@@ -91,4 +98,23 @@ public class WalletRepository {
             return null;
         }
     }
+
+    /*private class ListAsyncTask extends AsyncTask<Void, Void, List<Wallet>>{
+
+        private WalletDao walletDao;
+
+        private ListAsyncTask(WalletDao walletDao){
+            this.walletDao = walletDao;
+        }
+
+        @Override
+        protected List<Wallet> doInBackground(Void... voids) {
+            return walletDao.getAllWalletList();
+        }
+
+        @Override
+        protected void onPostExecute(List<Wallet> wallets) {
+            walletList = wallets;
+        }
+    }*/
 }

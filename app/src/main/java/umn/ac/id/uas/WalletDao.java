@@ -27,4 +27,7 @@ public interface WalletDao {
 
     @Query("SELECT * FROM wallet")
     LiveData<List<Wallet>> getAllWallet();
+
+    @Query("SELECT * FROM wallet")
+    List<Wallet> getAllWalletList();
 }

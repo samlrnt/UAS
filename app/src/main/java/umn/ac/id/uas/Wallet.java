@@ -17,6 +17,8 @@ public class Wallet implements Parcelable {
     @ColumnInfo(name = "id_wallet")
     private int idWallet;
 
+    private String accountCreateor;
+
     @NonNull
     @ColumnInfo(name = "namaWallet")
     private String name;
@@ -52,8 +54,10 @@ public class Wallet implements Parcelable {
         this.color = color;
     }
 
+
     protected Wallet(Parcel in) {
         idWallet = in.readInt();
+        accountCreateor = in.readString();
         name = in.readString();
         initBalance = in.readInt();
         balance = in.readInt();
@@ -107,6 +111,10 @@ public class Wallet implements Parcelable {
         return color;
     }
 
+    public String getAccountCreateor() {
+        return accountCreateor;
+    }
+
     public void setIdWallet(int idWallet) {
         this.idWallet = idWallet;
     }
@@ -139,6 +147,10 @@ public class Wallet implements Parcelable {
         this.color = color;
     }
 
+    public void setAccountCreateor(String accountCreateor) {
+        this.accountCreateor = accountCreateor;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -153,6 +165,7 @@ public class Wallet implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(idWallet);
+        dest.writeString(accountCreateor);
         dest.writeString(name);
         dest.writeInt(initBalance);
         dest.writeInt(balance);

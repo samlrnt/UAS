@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HalamanWallet extends AppCompatActivity {
+public class HalamanWallet extends AppCompatActivity implements Dialog.DialogListener{
 
     TextView tvNama, tvTabungan, tvGoals;
     CheckBox cbGoals;
@@ -50,19 +50,20 @@ public class HalamanWallet extends AppCompatActivity {
         Intent getIntent = getIntent();
         wallet = getIntent.getParcelableExtra("wallet");
         tvNama.setText(wallet.getName());
-        tvTabungan.setText(String.valueOf(wallet.getBalance()));
-        tvGoals.setText(String.valueOf(wallet.getSaldoGoal()));
+        tvTabungan.setText("Rp."+wallet.getBalance());
+        if(wallet.getSaldoGoal() == -1)
+            tvGoals.setText("Don't Have Goal");
+        else
+            tvGoals.setText("Rp. "+wallet.getSaldoGoal());
         cbGoals.setChecked(wallet.isGoal());
         probar.setMax(wallet.getInitBalance());
         showGoals();
+        setProgress();
 
         transaksiViewModel.getAllTransaksi().observe(this, new Observer<List<Transaksi>>() {
             @Override
             public void onChanged(List<Transaksi> transaksis) {
                 adapter.setAllTransaksi(transaksis, wallet.getIdWallet());
-                for(Transaksi transaksi:transaksis){
-                    allTransaksi.add(transaksi);
-                }
                 setProgress();
             }
         });
@@ -71,32 +72,44 @@ public class HalamanWallet extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showGoals();
-                wallet.setGoal(cbGoals.isChecked());
                 setProgress();
             }
         });
     }
 
     void showGoals(){
-        if(cbGoals.isChecked())
+        if(cbGoals.isChecked()){
+            if(wallet.getSaldoGoal() == -1){
+                Dialog dialog = new Dialog();
+                dialog.show(getSupportFragmentManager(), "example dialog");
+            }
             tvGoals.setVisibility(View.VISIBLE);
-        else
+        }
+        else{
             tvGoals.setVisibility(View.INVISIBLE);
+        }
+        wallet.setGoal(cbGoals.isChecked());
     }
 
     void setProgress(){
         int progress = 0;
         probar.setProgress(progress);
+        allTransaksi = transaksiViewModel.getAllTransaksiList();
         if(cbGoals.isChecked()){
             probar.setMax(wallet.getSaldoGoal());
             for(Transaksi transaksi: allTransaksi){
-                if(transaksi.getCategory().equals("Income")) progress += transaksi.getNominal();
+                if(transaksi.getIdCreatorWallet() == wallet.getIdWallet()){
+                    if(transaksi.getCategory().equals("Income"))
+                        progress += transaksi.getNominal();
+                }
             }
         }
         else{
             probar.setMax(wallet.getInitBalance());
             for(Transaksi transaksi: allTransaksi){
-                if(transaksi.getCategory().equals("Expense")) progress += transaksi.getNominal();
+                if(transaksi.getIdCreatorWallet() == wallet.getIdWallet()){
+                    if(transaksi.getCategory().equals("Expense")) progress += transaksi.getNominal();
+                }
             }
         }
         probar.setProgress(progress);
@@ -108,5 +121,19 @@ public class HalamanWallet extends AppCompatActivity {
         data.putExtra("databalik", wallet);
         setResult(RESULT_OK, data);
         super.finish();
+    }
+
+    @Override
+    public void applyTexts(int saldoTarget, boolean condition) {
+        if(condition){
+            wallet.setGoal(condition);
+            wallet.setSaldoGoal(saldoTarget);
+            tvGoals.setText(String.valueOf(saldoTarget));
+        }
+        else{
+            wallet.setGoal(condition);
+            cbGoals.setChecked(false);
+            tvGoals.setVisibility(View.INVISIBLE);
+        }
     }
 }

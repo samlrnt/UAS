@@ -25,6 +25,10 @@ public class WalletViewModel extends AndroidViewModel {
         return walletRepository.getAllWallet();
     }
 
+    public List<Wallet> getAllWalletList(){
+        return walletRepository.getWalletList();
+    }
+
     public void deleteAll(){
         walletRepository.deleteAllWallet();
     }

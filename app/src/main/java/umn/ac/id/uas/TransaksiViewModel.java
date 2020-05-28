@@ -25,6 +25,10 @@ public class TransaksiViewModel extends AndroidViewModel {
         return transaksiRepository.getAllTransaksi();
     }
 
+    public List<Transaksi> getAllTransaksiList(){
+        return transaksiRepository.getAllTransaksiList();
+    }
+
     public void deleteAllTransaksi(){
         transaksiRepository.deleteAllTransaksi();
     }
