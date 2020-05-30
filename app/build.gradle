@@ -69,4 +69,7 @@ dependencies {
 
     //Firebase database
     implementation 'com.google.firebase:firebase-database:19.3.0'
+
+    implementation "androidx.navigation:navigation-fragment:2.3.0-beta01"
+    implementation "androidx.navigation:navigation-ui:2.3.0-beta01"
 }
