@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn='navigation_view'>
+
+    <group android:checkableBehavior="single"
+        android:enabled="true">
+        <item android:id="@+id/backup"
+            android:icon="@drawable/ic_backup_black_24dp"
+            android:title="Backup"/>
+        <item android:id="@+id/restore"
+            android:icon="@drawable/ic_restore_black_24dp"
+            android:title="Restore"/>
+    </group>
+    <item android:id="@+id/sign_in_button"
+        android:icon="@drawable/ic_input_black_24dp"
+        android:title="Sign In"/>
+    <item android:id="@+id/sign_out_button"
+        android:icon="@drawable/ic_keyboard_backspace_black_24dp"
+        android:title="Sign Out"/>
+</menu>
