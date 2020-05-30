@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     ProgressBar progressBar;
     WalletViewModel walletViewModel;
     TransaksiViewModel transaksiViewModel;
-    TextView etSaldoSum, etExpense;
+    TextView etSaldoSum, etExpense, tvEmail;
     private List<Wallet> allWallet;
     private List<Transaksi> allTransaksi;
     private GoogleSignInClient mGoogleSignInClient;
@@ -54,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     private String emailKey;
     private String email;
     private NavigationView navigationView;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,35 +77,14 @@ public class HomeActivity extends AppCompatActivity {
         emailRef = mDatabase.getReference("email");
         walletRef = mDatabase.getReference("wallet");
         transRef = mDatabase.getReference("transaction");
+        View view = navigationView.getHeaderView(0);
+        tvEmail = view.findViewById(R.id.email);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        //saldowal = findViewById(R.id.saldoWallet);
-        //saldowal = saldowallet+saldowallet
-        //saldoexpense = expense1+expense1;
-        //progessbar = saldowal - saldoexpense;
-
-        //saldoexpense = findViewById(R.id.expense1)
-        /*progressValue = progressBar.getProgress();
-        currentPosition= saldowal - Expenses;
-        int total =saldoWallet.getDuration();
-        while(mediaPlayer!=null && currentPosition<total){
-            try{
-                if(progressEnable){
-                    Thread.sleep(1000);
-                    currentPosition=mediaPlayer.getCurrentPosition();
-                    long pos=1000L * currentPosition/total;
-                    Log.d("thread pos", pos+"");
-                    progressSeekBar.setProgress((int) pos);
-                }
-            }
-            catch (Exception e) {
-            }
-        }*/
 
         setting.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -168,10 +149,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 if(menuItem.getTitle().equals("Backup")){
-
+                    backup();
                 }
                 else if(menuItem.getTitle().equals("Restore")){
-
+                    restore();
                 }
                 else if(menuItem.getTitle().equals("Sign In")){
                     signIn();
@@ -227,9 +208,10 @@ public class HomeActivity extends AppCompatActivity {
             navigationView.getMenu().findItem(R.id.backup).setVisible(true);
             navigationView.getMenu().findItem(R.id.restore).setVisible(true);
             navigationView.getMenu().findItem(R.id.sign_out_button).setVisible(true);
+            navigationView.getMenu().findItem(R.id.sign_in_button).setVisible(false);
             email = account.getEmail();
 
-            emailRef.addValueEventListener(new ValueEventListener() {
+            emailRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     int ada = 0;
@@ -251,12 +233,89 @@ public class HomeActivity extends AppCompatActivity {
                     Toast.makeText(HomeActivity.this, "Something error with the Database, try again", Toast.LENGTH_SHORT).show();
                 }
             });
+           tvEmail.setText(email);
         }
         else{
             navigationView.getMenu().findItem(R.id.backup).setVisible(false);
             navigationView.getMenu().findItem(R.id.restore).setVisible(false);
-            navigationView.getMenu().findItem(R.id.sign_out_button).setVisible(true);
+            navigationView.getMenu().findItem(R.id.sign_out_button).setVisible(false);
+            navigationView.getMenu().findItem(R.id.sign_in_button).setVisible(true);
+            tvEmail.setText("User");
         }
+    }
+
+    private void restore(){
+        walletViewModel.deleteAll();
+        transaksiViewModel.deleteAllTransaksi();
+
+        walletRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    int idWallet = Integer.parseInt(dataSnapshot1.child("idWallet").getValue().toString());
+                    String nama = dataSnapshot1.child("name").getValue().toString();
+                    int balance = Integer.parseInt(dataSnapshot1.child("balance").getValue().toString());
+                    String notes = dataSnapshot1.child("notes").getValue().toString();
+                    boolean isgoal = Boolean.parseBoolean(dataSnapshot1.child("goal").getValue().toString());
+                    int saldoGoal = Integer.parseInt(dataSnapshot1.child("saldoGoal").getValue().toString());
+                    int color = Integer.parseInt(dataSnapshot1.child("color").getValue().toString());
+                    Wallet wallet = new Wallet(nama, balance, notes, isgoal, saldoGoal, color);
+                    wallet.setIdWallet(idWallet);
+                    wallet.setAccountCreateor(emailKey);
+                    walletViewModel.addWallet(wallet);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(context, "there's a problem with the Database, try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        transRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    int idTransaksi = Integer.parseInt(dataSnapshot1.child("idTransaksi").getValue().toString());
+                    String desc = dataSnapshot1.child("description").getValue().toString();
+                    int idCreatorWallet = Integer.parseInt(dataSnapshot1.child("idCreatorWallet").getValue().toString());
+                    String category = dataSnapshot1.child("category").getValue().toString();
+                    int nominal = Integer.parseInt(dataSnapshot1.child("nominal").getValue().toString());
+                    Transaksi transaksi = new Transaksi(idCreatorWallet,category,desc,nominal);
+                    transaksi.setIdTransaksi(idTransaksi);
+                    transaksiViewModel.addTransaksi(transaksi);
+                }
+                Toast.makeText(context, "wallet has been restored", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(context, "there's a problem with the Database, try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void backup(){
+        walletRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                walletRef.removeValue();
+                transRef.removeValue();
+                for(Wallet wallet: allWallet){
+                    wallet.setAccountCreateor(emailKey);
+                    walletRef.push().setValue(wallet);
+                }
+                for(Transaksi transaksi: allTransaksi){
+                    transRef.push().setValue(transaksi);
+                }
+                Toast.makeText(context, "backup successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(context, "Something error with the Database, Try again", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
