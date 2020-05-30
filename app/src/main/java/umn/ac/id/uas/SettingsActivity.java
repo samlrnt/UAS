@@ -1,16 +1,30 @@
 package umn.ac.id.uas;
 
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.settings_activity);
+        super.onCreate(savedInstanceState );
+        setContentView(R.layout.settings_activity);
+        frameLayout = findViewById( R.id.settings );
+
+        if(frameLayout != null){
+
+            if(savedInstanceState!=null){
+                return;
+            }
+
+            getSupportFragmentManager().beginTransaction().add( R.id.settings, new SettingsFragment()).commit();
+        }
+
         /*getSupportFragmentManager()
                 .beginTransaction()
                 .replace( R.id.settings, new SettingsFragment() )
