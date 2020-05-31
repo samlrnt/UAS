@@ -15,23 +15,25 @@
 
         <TextView
             android:id="@+id/tanggal"
-            android:layout_width="wrap_content"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Date"
             android:textColor="#000"
             android:textSize="20dp" />
+
         <TextView
             android:id="@+id/transaksi"
-            android:layout_width="wrap_content"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Transaksi"
             android:textColor="#000"
             android:textSize="20dp" />
+
         <TextView
             android:id="@+id/jumlah"
-            android:layout_width="wrap_content"
+            android:layout_width="74dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Jumlah"

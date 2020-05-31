@@ -58,9 +58,9 @@ public class IntroActivity extends AppCompatActivity {
         // fill list screen
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Wallet","Pilih Wallet",R.drawable.img1));
-        mList.add(new ScreenItem("Buat Wallet","Pilih Add New Wallet",R.drawable.img2));
-        mList.add(new ScreenItem("Isi Wallet","Isi detailnya dan submit. Kamu sudah bisa menggunakan walletnya!",R.drawable.img3));
+        mList.add(new ScreenItem("Home","Home page will show your balance, you can go to wallet page by clicking wallet button and swipe right to login!",R.drawable.img1));
+        mList.add(new ScreenItem("Wallet","You can add new wallet or just monitoring your existing wallet. just swipe left ro remove the wallet!",R.drawable.img2));
+        mList.add(new ScreenItem("New Wallet","Fill the form and you're ready!",R.drawable.img3));
 
         // setup viewpager
         screenPager =findViewById(R.id.screen_viewpager);

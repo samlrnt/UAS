@@ -28,12 +28,13 @@
         android:layout_height="400dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:background="@drawable/strokee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/intro_title"
-        app:layout_constraintVertical_bias="0.186"
+        app:layout_constraintVertical_bias="0.07999998"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -41,16 +42,17 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:lineSpacingExtra="16dp"
-        android:text="TextView"
-        android:textSize="27sp"
+        android:lineSpacingExtra="5dp"
+        android:paddingRight="30dp"
+        android:text="@string/textview"
         android:textAlignment="center"
         android:textColor="#ffff"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/intro_img"
-        app:layout_constraintVertical_bias="0.259" />
+        app:layout_constraintVertical_bias="0.120000005" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

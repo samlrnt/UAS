@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="email"
         android:paddingTop="5dp"
-        android:textSize="15dp"
+        android:textSize="25dp"
         android:textColor="#fff"/>
 
 </LinearLayout>

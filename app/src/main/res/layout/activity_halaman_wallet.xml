@@ -74,7 +74,7 @@
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jadikan Sebagai Goals"
+        android:text="Set as goals"
         android:textColor="#FFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,42 +82,50 @@
         app:layout_constraintTop_toBottomOf="@+id/tabungan"
         app:layout_constraintVertical_bias="0.167" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginTop="80dp"
-        android:textColor="#FFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox"
-        app:layout_constraintVertical_bias="0.692" />
-
     <TextView
         android:id="@+id/Goals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Goals = jumlah_uang"
         android:textColor="#FFFF"
-        app:layout_constraintBottom_toTopOf="@+id/history"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox"
         app:layout_constraintVertical_bias="0.061" />
 
-    <TextView
-        android:id="@+id/Reward"
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="31dp"
-        android:text="Reward : ---"
-        android:textColor="#FFFF"
-        app:layout_constraintBottom_toTopOf="@+id/history"
+        android:layout_height="200dp"
+        android:fillViewport="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Goals"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.31">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:background="@drawable/roundedb"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/history"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_marginTop="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#FFFF"
+                android:verticalScrollbarPosition="right" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
