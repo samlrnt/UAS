@@ -28,6 +28,10 @@ public class TransaksiRepository {
         new DeleteAllTransaksiAsyncTask(transaksiDao).execute();
     }
 
+    public void deleteTransaksi(Transaksi transaksi){
+        new DeleteTransaksiAsyncTask(transaksiDao).execute(transaksi);
+    }
+
     public LiveData<List<Transaksi>> getAllTransaksi() {
         return allTransaksi;
     }
@@ -64,4 +68,19 @@ public class TransaksiRepository {
         }
     }
 
+    private class DeleteTransaksiAsyncTask extends AsyncTask<Transaksi, Void, Void>{
+
+        private TransaksiDao transaksiDao;
+
+        private DeleteTransaksiAsyncTask(TransaksiDao transaksiDao){
+            this.transaksiDao = transaksiDao;
+        }
+
+
+        @Override
+        protected Void doInBackground(Transaksi... transaksis) {
+            transaksiDao.deleteTransaksi(transaksis[0]);
+            return null;
+        }
+    }
 }

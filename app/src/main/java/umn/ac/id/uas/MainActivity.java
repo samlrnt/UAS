@@ -109,7 +109,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 if(direction == ItemTouchHelper.LEFT){
+                    List<Transaksi> listTransaksi = transaksiViewModel.getAllTransaksiList();
+                    for(Transaksi transaksi : listTransaksi){
+                        if(transaksi.getIdCreatorWallet() == adapter.getWallet(viewHolder.getAdapterPosition()).getIdWallet()){
+                            transaksiViewModel.deleteTransaksi(transaksi);
+                        }
+                    }
                     walletViewModel.deleteWallet(adapter.getWallet(viewHolder.getAdapterPosition()));
+
                     Toast.makeText(MainActivity.this, "Delete "+adapter.getWallet(viewHolder.getAdapterPosition()).getName()+" successfully", Toast.LENGTH_SHORT).show();
                 }
             }
