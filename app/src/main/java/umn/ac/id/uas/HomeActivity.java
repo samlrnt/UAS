@@ -55,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView etSaldoSum, etExpense, tvEmail;
     private List<Wallet> allWallet;
     private List<Transaksi> allTransaksi;
+    private List<Integer> walletId;
     private GoogleSignInClient mGoogleSignInClient;
     static int RC_SIGN_IN = 1;
     private GoogleSignInAccount account;
@@ -96,6 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         transRef = mDatabase.getReference("transaction");
         View view = navigationView.getHeaderView(0);
         tvEmail = view.findViewById(R.id.email);
+        walletId = new ArrayList<>();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -286,17 +288,20 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    int idWallet = Integer.parseInt(dataSnapshot1.child("idWallet").getValue().toString());
-                    String nama = dataSnapshot1.child("name").getValue().toString();
-                    int balance = Integer.parseInt(dataSnapshot1.child("balance").getValue().toString());
-                    String notes = dataSnapshot1.child("notes").getValue().toString();
-                    boolean isgoal = Boolean.parseBoolean(dataSnapshot1.child("goal").getValue().toString());
-                    int saldoGoal = Integer.parseInt(dataSnapshot1.child("saldoGoal").getValue().toString());
-                    int color = Integer.parseInt(dataSnapshot1.child("color").getValue().toString());
-                    Wallet wallet = new Wallet(nama, balance, notes, isgoal, saldoGoal, color);
-                    wallet.setIdWallet(idWallet);
-                    wallet.setAccountCreateor(emailKey);
-                    walletViewModel.addWallet(wallet);
+                    if(dataSnapshot1.child("accountCreateor").getValue().toString().equals(emailKey)){
+                        int idWallet = Integer.parseInt(dataSnapshot1.child("idWallet").getValue().toString());
+                        String nama = dataSnapshot1.child("name").getValue().toString();
+                        int balance = Integer.parseInt(dataSnapshot1.child("balance").getValue().toString());
+                        String notes = dataSnapshot1.child("notes").getValue().toString();
+                        boolean isgoal = Boolean.parseBoolean(dataSnapshot1.child("goal").getValue().toString());
+                        int saldoGoal = Integer.parseInt(dataSnapshot1.child("saldoGoal").getValue().toString());
+                        int color = Integer.parseInt(dataSnapshot1.child("color").getValue().toString());
+                        Wallet wallet = new Wallet(nama, balance, notes, isgoal, saldoGoal, color);
+                        wallet.setIdWallet(idWallet);
+                        wallet.setAccountCreateor(emailKey);
+                        walletViewModel.addWallet(wallet);
+                        walletId.add(wallet.getIdWallet());
+                    }
                 }
             }
 
@@ -310,14 +315,18 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    int idTransaksi = Integer.parseInt(dataSnapshot1.child("idTransaksi").getValue().toString());
-                    String desc = dataSnapshot1.child("description").getValue().toString();
-                    int idCreatorWallet = Integer.parseInt(dataSnapshot1.child("idCreatorWallet").getValue().toString());
-                    String category = dataSnapshot1.child("category").getValue().toString();
-                    int nominal = Integer.parseInt(dataSnapshot1.child("nominal").getValue().toString());
-                    Transaksi transaksi = new Transaksi(idCreatorWallet,category,desc,nominal);
-                    transaksi.setIdTransaksi(idTransaksi);
-                    transaksiViewModel.addTransaksi(transaksi);
+                    for(Integer id: walletId){
+                        if(Integer.parseInt(dataSnapshot1.child("idCreatorWallet").getValue().toString()) == id){
+                            int idTransaksi = Integer.parseInt(dataSnapshot1.child("idTransaksi").getValue().toString());
+                            String desc = dataSnapshot1.child("description").getValue().toString();
+                            int idCreatorWallet = Integer.parseInt(dataSnapshot1.child("idCreatorWallet").getValue().toString());
+                            String category = dataSnapshot1.child("category").getValue().toString();
+                            int nominal = Integer.parseInt(dataSnapshot1.child("nominal").getValue().toString());
+                            Transaksi transaksi = new Transaksi(idCreatorWallet,category,desc,nominal);
+                            transaksi.setIdTransaksi(idTransaksi);
+                            transaksiViewModel.addTransaksi(transaksi);
+                        }
+                    }
                 }
                 Toast.makeText(context, "wallet has been restored", Toast.LENGTH_SHORT).show();
             }
