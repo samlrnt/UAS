@@ -32,4 +32,8 @@ public class TransaksiViewModel extends AndroidViewModel {
     public void deleteAllTransaksi(){
         transaksiRepository.deleteAllTransaksi();
     }
+
+    public void deleteTransaksi(Transaksi transaksi){
+        transaksiRepository.deleteTransaksi(transaksi);
+    }
 }
