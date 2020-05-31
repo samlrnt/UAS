@@ -4,7 +4,7 @@
     android:layout_height="176dp"
     android:gravity="bottom"
     android:padding="16dp"
-    android:background="@color/colorAccent">
+    android:background="#9fdfb1">
 
     <ImageView
         android:layout_width="80dp"
