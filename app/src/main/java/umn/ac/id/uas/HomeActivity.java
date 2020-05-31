@@ -65,12 +65,6 @@ public class HomeActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private Context context = this;
 
-
-    /* Bikin Shared Preference buat notif settings gitu-gitu */
-    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-    Boolean NotifPref = sharedPref.getBoolean(SettingsActivity.KEY_PREF_NOTIFICATION_SWITCH, false);
-    Boolean FingerprintPref = sharedPref.getBoolean(SettingsActivity.KEY_PREF_FINGERPRINT_SWITCH, false);
-
     private NotificationManager mNotifyManager;
     private static final int NOTIFICATION_ID = 0;
 
@@ -79,6 +73,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        /* Bikin Shared Preference buat notif settings gitu-gitu */
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean NotifPref = sharedPref.getBoolean(SettingsActivity.KEY_PREF_NOTIFICATION_SWITCH, false);
+        Boolean FingerprintPref = sharedPref.getBoolean(SettingsActivity.KEY_PREF_FINGERPRINT_SWITCH, false);
+
+        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
         progressBar =(ProgressBar) findViewById(R.id.progressBar);
         btn = findViewById(R.id.button);
         btnex = findViewById(R.id.btnExpense);
@@ -183,6 +183,20 @@ public class HomeActivity extends AppCompatActivity {
 
         /*Bikin Notification Channel*/
         CreateNotificationChannel();
+
+        /* Bikin Notification Intent jalan tiap jam 8 malem */
+        if(NotifPref){
+            Intent intent = new Intent(HomeActivity.this, NotificationBroadcast.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, intent, 0);
+
+            AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, 20);
+
+            assert alarmManager != null;
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
     }
 
     private void signIn(){
@@ -358,18 +372,5 @@ public class HomeActivity extends AppCompatActivity {
         account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
 
-        /* Bikin Notification Intent jalan tiap jam 8 malem */
-        if(NotifPref){
-            Intent intent = new Intent(HomeActivity.this, NotificationBroadcast.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, intent, 0);
-
-            AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 20);
-
-            assert alarmManager != null;
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-        }
     }
 }
