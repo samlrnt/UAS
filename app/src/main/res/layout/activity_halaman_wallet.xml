@@ -13,14 +13,14 @@
         android:layout_height="wrap_content"
         android:text="Nama_Wallet"
         android:textColor="#FFFF"
+        android:textSize="40dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.123"
-        android:textSize="40dp"/>
+        app:layout_constraintVertical_bias="0.060000002" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageView5"
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="20dp"
         android:background="#FFF"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabungan"
-        app:layout_constraintVertical_bias="0.167" />
+        app:layout_constraintVertical_bias="0.07999998" />
 
     <TextView
         android:id="@+id/Goals"
@@ -95,8 +95,8 @@
         app:layout_constraintVertical_bias="0.061" />
 
 
-
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:fillViewport="false"
@@ -104,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Goals"
-        app:layout_constraintVertical_bias="0.31">
+        app:layout_constraintVertical_bias="0.65999997">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -124,8 +124,19 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-
+    <TextView
+        android:id="@+id/texthis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="History"
+        android:textColor="#FFFF"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Goals"
+        app:layout_constraintVertical_bias="0.65" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
