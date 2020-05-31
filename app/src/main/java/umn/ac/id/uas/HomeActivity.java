@@ -5,9 +5,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +41,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -56,6 +64,15 @@ public class HomeActivity extends AppCompatActivity {
     private String email;
     private NavigationView navigationView;
     private Context context = this;
+
+
+    /* Bikin Shared Preference buat notif settings gitu-gitu */
+    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+    Boolean NotifPref = sharedPref.getBoolean(SettingsActivity.KEY_PREF_NOTIFICATION_SWITCH, false);
+    Boolean FingerprintPref = sharedPref.getBoolean(SettingsActivity.KEY_PREF_FINGERPRINT_SWITCH, false);
+
+    private NotificationManager mNotifyManager;
+    private static final int NOTIFICATION_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +180,9 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        /*Bikin Notification Channel*/
+        CreateNotificationChannel();
     }
 
     private void signIn(){
@@ -295,6 +315,20 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void CreateNotificationChannel(){
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "Swallow Notification Channel";
+            String description = "Channel for Swallow Notification";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("notifySwallow", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
     private void backup(){
         walletRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -323,5 +357,19 @@ public class HomeActivity extends AppCompatActivity {
         super.onStart();
         account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
+
+        /* Bikin Notification Intent jalan tiap jam 8 malem */
+        if(NotifPref){
+            Intent intent = new Intent(HomeActivity.this, NotificationBroadcast.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, intent, 0);
+
+            AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, 20);
+
+            assert alarmManager != null;
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
     }
 }

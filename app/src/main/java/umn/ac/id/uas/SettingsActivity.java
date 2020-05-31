@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
+
+    public static final String KEY_PREF_NOTIFICATION_SWITCH = "NotificationSwitch";
+    public static final String KEY_PREF_FINGERPRINT_SWITCH = "FingerprintSwitch";
+
     FrameLayout frameLayout;
 
     @Override

@@ -5,7 +5,7 @@
 
         <SwitchPreference
             android:defaultValue="false"
-            android:key="Notification"
+            android:key="NotificationSwitch"
             android:summary="Remind me to check the App."
             android:title="Notification" />
         <Preference
@@ -18,17 +18,13 @@
     <PreferenceCategory app:title="Authentication Settings">
         <SwitchPreference
             android:defaultValue="false"
-            android:key="Fingerprint"
+            android:key="FingerprintSwitch"
             android:summary="Turn fingerprint authentication on or off"
             android:title="Fingerprint Authentication" />
+        <Preference
+            android:key="Fingerprint Setting"
+            android:title="Finngerprint Setting" />
 
-
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="Fingerprint Settings"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Fingerprint Setting" />
     </PreferenceCategory>
 
 </PreferenceScreen>

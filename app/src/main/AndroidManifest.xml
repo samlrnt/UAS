@@ -29,6 +29,8 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".IntroActivity" />
         <activity android:name=".HalExpense" />
+
+        <receiver android:name=".NotificationBroadcast"/>
     </application>
 
 </manifest>
